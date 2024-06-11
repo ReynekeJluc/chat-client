@@ -1,4 +1,3 @@
-import EmojiPicker from 'emoji-picker-react';
 import React from 'react';
 
 import { Button } from '../../components/Button';
@@ -30,7 +29,7 @@ export const Chat = () => {
 				<input type='text' placeholder='Message...' />
 				<div className={styles.right_side}>
 					<div className={styles.emoji_block}>
-						<EmojiPicker></EmojiPicker>
+						{/* <EmojiPicker></EmojiPicker> */}
 					</div>
 					<Button title='Send'></Button>
 				</div>
