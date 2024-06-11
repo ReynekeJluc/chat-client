@@ -1,0 +1,59 @@
+body {
+	overflow: hidden;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: var(--main-gray);
+	padding: 3vh 5vw;
+	h3 {
+		font-size: 30px;
+	}
+	.leave_button {
+		font-size: 25px;
+		color: var(--text-leave);
+		transition: color 0.3s linear;
+		&:hover {
+			color: red;
+		}
+	}
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5vh;
+	height: 70vh;
+	background: var(--main-gray);
+	margin-top: 2vh;
+	padding: 2vh 2vw;
+	overflow: auto;
+}
+
+.input_block {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	input {
+		flex: 1 0;
+		height: var(--size-input-height);
+		background: var(--sub-gray);
+		font-size: 25px;
+		color: #fff;
+		padding: 0 5vw;
+	}
+	.right_side {
+		display: flex;
+		.emoji_block {
+			width: var(--size-input-height);
+			height: var(--size-input-height);
+			background: red;
+		}
+		Button {
+			background: var(--sub-gray);
+			margin: 0;
+		}
+	}
+}

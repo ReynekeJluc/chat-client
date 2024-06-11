@@ -1,0 +1,13 @@
+.connect {
+	display: block;
+	background: var(--sub-gray);
+	color: #fff;
+	font-weight: 500;
+	font-size: 20px;
+	margin: 0 auto;
+	padding: 2vh 5vw;
+	transition: color 0.3s ease-in-out;
+	&:hover {
+		color: var(--purple);
+	}
+}

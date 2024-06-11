@@ -1,3 +1,6 @@
+import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
+
 import styles from './Home.module.scss';
 
 export const Home = () => {
@@ -13,16 +16,10 @@ export const Home = () => {
 					<span>stranger</span>
 				</div>
 				<div className={styles.fields}>
-					<div className={styles.field}>
-						<div className={styles.left_block}>Your nick:</div>
-						<input type='text' placeholder='nickname...' />
-					</div>
-					<div className={styles.field}>
-						<div className={styles.left_block}>Room name:</div>
-						<input type='text' placeholder='room name...' />
-					</div>
+					<Input title='Your nick:' placeholder='nickname...'></Input>
+					<Input title='Room name:' placeholder='room name...'></Input>
 				</div>
-				<button className={styles.connect}>Connect</button>
+				<Button title='Connect'></Button>
 			</form>
 		</>
 	);

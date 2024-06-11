@@ -1,0 +1,30 @@
+.message_block {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background: var(--sub-gray);
+	max-width: 35vw;
+	border-radius: 5px;
+	padding: 2vh 2vw;
+	margin-right: auto;
+	z-index: 1000;
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: -10px;
+		width: 100px;
+		height: 80px;
+		background: var(--sub-gray);
+		clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+		z-index: -1;
+	}
+	h6 {
+		font-weight: 600;
+		margin-bottom: 1vh;
+	}
+	.text_block {
+		line-height: 2.3vh;
+		font-size: 18px;
+	}
+}

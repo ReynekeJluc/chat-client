@@ -1,0 +1,24 @@
+.field {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: var(--sub-gray);
+	padding: 5vh 0 5vh 3vw;
+	min-width: 90%;
+	height: var(--size-input-height);
+	.left_block {
+		font-size: 30px;
+	}
+	input {
+		background: var(--sub-gray);
+		color: var(--text-gray);
+		font-size: 25px;
+		min-width: 38vw;
+		height: var(--size-input-height);
+		padding: 0 3%;
+		border-left: 3px solid var(--purple);
+		&:focus {
+			color: var(--purple);
+		}
+	}
+}
