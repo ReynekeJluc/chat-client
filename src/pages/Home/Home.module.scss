@@ -78,8 +78,8 @@
 	font-size: 20px;
 	margin: 0 auto;
 	padding: 2vh 5vw;
+	transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 	&:hover {
-		transition: background 0.5s ease, color 0.5s ease;
 		background: var(--bg-color);
 		color: var(--purple);
 	}
