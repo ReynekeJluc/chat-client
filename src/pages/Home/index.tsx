@@ -1,9 +1,30 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 
 import styles from './Home.module.scss';
 
+interface ValuesState {
+	[key: string]: string;
+}
+
+const NAME = 'name';
+const ROOM = 'room';
+
 export const Home = () => {
+	const [values, setValues] = React.useState<ValuesState>({
+		[NAME]: '',
+		[ROOM]: '',
+	});
+
+	const handleChange = (
+		name: string,
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setValues({ ...values, [`${name}`]: e.target.value });
+	};
+
 	return (
 		<>
 			<div className={styles.title_block}>
@@ -16,10 +37,24 @@ export const Home = () => {
 					<span>stranger</span>
 				</div>
 				<div className={styles.fields}>
-					<Input title='Your nick:' placeholder='nickname...'></Input>
-					<Input title='Room name:' placeholder='room name...'></Input>
+					<Input
+						Title='Your nick:'
+						Name={NAME}
+						Placeholder='nickname...'
+						Value={values[NAME]}
+						OnChange={handleChange}
+					></Input>
+					<Input
+						Title='Room name:'
+						Name={ROOM}
+						Placeholder='room name...'
+						Value={values[ROOM]}
+						OnChange={handleChange}
+					></Input>
 				</div>
-				<Button title='Connect'></Button>
+				<Link to={`/chat?name=${values[NAME]}&room=${values[ROOM]}`}>
+					<Button title='Connect'></Button>
+				</Link>
 			</form>
 		</>
 	);
