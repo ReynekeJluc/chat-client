@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
 
 import { Button } from '../../components/Button';
 import { Message } from '../../components/Message';
@@ -6,7 +8,49 @@ import { MyMessage } from '../../components/MyMessage';
 
 import styles from './Chat.module.scss';
 
+interface paramsState {
+	[key: string]: string;
+}
+interface MessageState {
+	[key: string]: Array<string>;
+}
+
+interface User {
+	name: string;
+}
+
+interface MessageData {
+	user: User;
+	message: string;
+}
+
+const socket = io('http://localhost:3000');
+
 export const Chat = () => {
+	const { search } = useLocation();
+	const [params, setParams] = useState<paramsState>();
+	const [state, setState] = useState<MessageState>();
+
+	useEffect(() => {
+		const searchParams = Object.fromEntries(new URLSearchParams(search));
+		setParams(searchParams);
+
+		socket.emit('join', searchParams);
+	}, []);
+
+	useEffect(() => {
+		socket.on('message', ({ data }: { data: MessageData }) => {
+			setState(s => {
+				const newState = { ...s };
+				if (!newState[data.user.name]) {
+					newState[data.user.name] = [];
+				}
+				newState[data.user.name].push(data.message);
+				return newState;
+			});
+		});
+	}, []);
+
 	const [isAdmin, setIsAdmin] = React.useState(true);
 	return (
 		<>
