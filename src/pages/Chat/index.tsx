@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
+
 import { Button } from '../../components/Button';
-import { Message } from '../../components/Message';
-import { MyMessage } from '../../components/MyMessage';
 
 import styles from './Chat.module.scss';
 
@@ -28,8 +29,11 @@ const socket = io('http://localhost:3000');
 
 export const Chat = () => {
 	const { search } = useLocation();
+	const pickerRef = useRef<HTMLDivElement | null>(null);
+	const iconRef = useRef<HTMLDivElement | null>(null);
 	const [params, setParams] = useState<paramsState>();
 	const [state, setState] = useState<MessageState>();
+	const [isDisable, setIsDisable] = useState(false);
 
 	useEffect(() => {
 		const searchParams = Object.fromEntries(new URLSearchParams(search));
@@ -51,7 +55,28 @@ export const Chat = () => {
 		});
 	}, []);
 
-	const [isAdmin, setIsAdmin] = React.useState(true);
+	useEffect(() => {
+		function handleClickOutside(e: any) {
+			if (
+				pickerRef.current &&
+				!pickerRef.current.contains(e.target) &&
+				iconRef.current &&
+				!iconRef.current.contains(e.target)
+			) {
+				setIsDisable(false);
+			}
+		}
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [pickerRef, iconRef]);
+
+	const handleClick = () => {
+		setIsDisable(!isDisable);
+	};
+
 	return (
 		<>
 			<header>
@@ -65,18 +90,26 @@ export const Chat = () => {
 				</a>
 			</header>
 			<main>
-				<Message isAdmin={isAdmin} nickname='Admin'></Message>
-				<MyMessage></MyMessage>
-				<Message isAdmin={!isAdmin} nickname='User'></Message>
+				{/*<MyMessage></MyMessage>
+				<Message isAdmin={!isAdmin} nickname='User'></Message> */}
 			</main>
 			<div className={styles.input_block}>
-				<input type='text' placeholder='Message...' />
-				<div className={styles.right_side}>
-					<div className={styles.emoji_block}>
-						{/* <EmojiPicker></EmojiPicker> */}
-					</div>
-					<Button title='Send'></Button>
+				<div className={styles.emoji_icon} onClick={handleClick} ref={iconRef}>
+					<img src='../../../public/img/icons/emoji.png' alt='emoji' />
 				</div>
+				<div className={styles.emoji_block} ref={pickerRef}>
+					{isDisable ? (
+						<Picker
+							data={data}
+							onEmojiSelect={console.log}
+							maxFrequentRows={0}
+							theme={'dark'}
+							previewPosition={'none'}
+						/>
+					) : null}
+				</div>
+				<input type='text' placeholder='Message...' />
+				<Button title='Send'></Button>
 			</div>
 		</>
 	);

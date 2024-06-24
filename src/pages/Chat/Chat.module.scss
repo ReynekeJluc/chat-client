@@ -1,5 +1,5 @@
 body {
-	overflow: hidden;
+	//overflow: hidden;
 }
 
 header {
@@ -7,7 +7,7 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	background: var(--main-gray);
-	padding: 3vh 5vw;
+	padding: 3vh 2.5vw;
 	h3 {
 		font-size: 30px;
 	}
@@ -33,6 +33,7 @@ main {
 }
 
 .input_block {
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -42,18 +43,38 @@ main {
 		background: var(--sub-gray);
 		font-size: 25px;
 		color: #fff;
-		padding: 0 5vw;
+		padding: 0 5vw 0 2vw;
+		border-left: 2px solid var(--purple);
+		border-right: 2px solid var(--purple);
 	}
-	.right_side {
-		display: flex;
-		.emoji_block {
-			width: var(--size-input-height);
-			height: var(--size-input-height);
-			background: red;
+	.emoji_icon {
+		position: relative;
+		width: var(--size-input-height);
+		height: var(--size-input-height);
+		background: var(--sub-gray);
+		cursor: pointer;
+		img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			max-width: 65%;
+			opacity: 50%;
+			transition: opacity 0.2s ease-in-out;
+			&:hover {
+				opacity: 100%;
+			}
 		}
-		Button {
-			background: var(--sub-gray);
-			margin: 0;
-		}
+	}
+	.emoji_block {
+		position: absolute;
+		top: -440px;
+		left: 2vw;
+		z-index: 1000;
+	}
+	Button {
+		height: var(--size-input-height);
+		background: var(--sub-gray);
+		margin: 0;
 	}
 }

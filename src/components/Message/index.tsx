@@ -1,7 +1,6 @@
 import styles from './Message.module.scss';
 
 interface Props {
-	isAdmin: boolean;
 	nickname: string;
 }
 
@@ -10,7 +9,7 @@ export const Message = (props: Props) => {
 		<div className={styles.message_block}>
 			<h6
 				style={{
-					color: props.isAdmin ? 'var(--text-admin)' : 'var(--text-user)',
+					color: 'var(--text-user)',
 				}}
 			>
 				{props.nickname}
