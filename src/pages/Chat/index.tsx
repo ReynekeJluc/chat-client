@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
 import data from '@emoji-mart/data';
@@ -26,6 +26,7 @@ const socket = io('http://localhost:3000');
 
 export const Chat = () => {
 	const { search } = useLocation();
+	const navigate = useNavigate();
 
 	const pickerRef = useRef<HTMLDivElement | null>(null);
 	const iconRef = useRef<HTMLDivElement | null>(null);
@@ -34,7 +35,7 @@ export const Chat = () => {
 	const [state, setState] = useState<MessageState[]>([]);
 	const [isDisable, setIsDisable] = useState(false);
 	const [message, setMessage] = useState('');
-	const [users, setUsers] = useState();
+	const [users, setUsers] = useState(0);
 
 	useEffect(() => {
 		const searchParams = Object.fromEntries(new URLSearchParams(search));
@@ -90,6 +91,11 @@ export const Chat = () => {
 		setMessage(`${message}` + `${e.native}`);
 	};
 
+	const clickLeftRoom = () => {
+		socket.emit('leftRoom', { params });
+		navigate('/');
+	};
+
 	return (
 		<>
 			<header>
@@ -98,9 +104,9 @@ export const Chat = () => {
 					<span>online: </span>
 					<span>{users}</span>
 				</div>
-				<a href='?' className={styles.leave_button}>
+				<button onClick={clickLeftRoom} className={styles.leave_button}>
 					Leave room
-				</a>
+				</button>
 			</header>
 			<main>
 				{state.map(({ message, user }, index) => (
