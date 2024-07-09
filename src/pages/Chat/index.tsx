@@ -7,20 +7,17 @@ import Picker from '@emoji-mart/react';
 
 import { Button } from '../../components/Button';
 
+import { Message } from '../../components/Message';
 import styles from './Chat.module.scss';
 
 interface paramsState {
 	[key: string]: string;
 }
-interface MessageState {
-	[key: string]: Array<string>;
-}
-
 interface User {
 	name: string;
 }
 
-interface MessageData {
+interface MessageState {
 	user: User;
 	message: string;
 }
@@ -29,11 +26,15 @@ const socket = io('http://localhost:3000');
 
 export const Chat = () => {
 	const { search } = useLocation();
+
 	const pickerRef = useRef<HTMLDivElement | null>(null);
 	const iconRef = useRef<HTMLDivElement | null>(null);
-	const [params, setParams] = useState<paramsState>();
-	const [state, setState] = useState<MessageState>();
+
+	const [params, setParams] = useState<paramsState>({ room: '', user: '' });
+	const [state, setState] = useState<MessageState[]>([]);
 	const [isDisable, setIsDisable] = useState(false);
+	const [message, setMessage] = useState('');
+	const [users, setUsers] = useState();
 
 	useEffect(() => {
 		const searchParams = Object.fromEntries(new URLSearchParams(search));
@@ -43,15 +44,14 @@ export const Chat = () => {
 	}, []);
 
 	useEffect(() => {
-		socket.on('message', ({ data }: { data: MessageData }) => {
-			setState(s => {
-				const newState = { ...s };
-				if (!newState[data.user.name]) {
-					newState[data.user.name] = [];
-				}
-				newState[data.user.name].push(data.message);
-				return newState;
-			});
+		socket.on('joinRoom', ({ data: { users } }) => {
+			setUsers(users.length);
+		});
+	}, []);
+
+	useEffect(() => {
+		socket.on('message', ({ data }: { data: MessageState }) => {
+			setState(st => [...st, data]);
 		});
 	}, []);
 
@@ -77,21 +77,40 @@ export const Chat = () => {
 		setIsDisable(!isDisable);
 	};
 
+	const handleSend = (e: any) => {
+		e.preventDefault();
+		if (!message) return;
+
+		socket.emit('sendMessage', { message, params });
+
+		setMessage('');
+	};
+
+	const clickEmoji = (e: any) => {
+		setMessage(`${message}` + `${e.native}`);
+	};
+
 	return (
 		<>
 			<header>
-				<h3>Name room</h3>
+				<h3>{params.room}</h3>
 				<div className={styles.online}>
 					<span>online: </span>
-					<span>5</span>
+					<span>{users}</span>
 				</div>
 				<a href='?' className={styles.leave_button}>
 					Leave room
 				</a>
 			</header>
 			<main>
-				{/*<MyMessage></MyMessage>
-				<Message isAdmin={!isAdmin} nickname='User'></Message> */}
+				{state.map(({ message, user }, index) => (
+					<Message
+						key={index}
+						nickname={user.name}
+						messages={message}
+						myNick={params.name}
+					/>
+				))}
 			</main>
 			<div className={styles.input_block}>
 				<div className={styles.emoji_icon} onClick={handleClick} ref={iconRef}>
@@ -101,15 +120,22 @@ export const Chat = () => {
 					{isDisable ? (
 						<Picker
 							data={data}
-							onEmojiSelect={console.log}
+							onEmojiSelect={clickEmoji}
 							maxFrequentRows={0}
 							theme={'dark'}
 							previewPosition={'none'}
 						/>
 					) : null}
 				</div>
-				<input type='text' placeholder='Message...' />
-				<Button title='Send'></Button>
+				<form onSubmit={handleSend}>
+					<input
+						value={message}
+						onChange={e => setMessage(e.target.value)}
+						type='text'
+						placeholder='Message...'
+					/>
+				</form>
+				<Button OnClick={handleSend} title='Send'></Button>
 			</div>
 		</>
 	);

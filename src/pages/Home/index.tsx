@@ -25,6 +25,10 @@ export const Home = () => {
 		setValues({ ...values, [`${name}`]: e.target.value });
 	};
 
+	const handleClick = (e: any) => {
+		console.log('Join');
+	};
+
 	return (
 		<>
 			<div className={styles.title_block}>
@@ -53,7 +57,7 @@ export const Home = () => {
 					></Input>
 				</div>
 				<Link to={`/chat?name=${values[NAME]}&room=${values[ROOM]}`}>
-					<Button title='Connect'></Button>
+					<Button title='Connect' OnClick={handleClick}></Button>
 				</Link>
 			</form>
 		</>

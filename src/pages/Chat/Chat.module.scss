@@ -37,15 +37,18 @@ main {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	input {
+	form {
 		flex: 1 0;
-		height: var(--size-input-height);
-		background: var(--sub-gray);
-		font-size: 25px;
-		color: #fff;
-		padding: 0 5vw 0 2vw;
 		border-left: 2px solid var(--purple);
 		border-right: 2px solid var(--purple);
+		input {
+			width: 100%;
+			height: var(--size-input-height);
+			background: var(--sub-gray);
+			font-size: 25px;
+			color: #fff;
+			padding: 0 5vw 0 2vw;
+		}
 	}
 	.emoji_icon {
 		position: relative;

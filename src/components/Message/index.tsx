@@ -2,10 +2,12 @@ import styles from './Message.module.scss';
 
 interface Props {
 	nickname: string;
+	messages: string;
+	myNick: string;
 }
 
 export const Message = (props: Props) => {
-	return (
+	return props.myNick !== props.nickname ? (
 		<div className={styles.message_block}>
 			<h6
 				style={{
@@ -14,7 +16,12 @@ export const Message = (props: Props) => {
 			>
 				{props.nickname}
 			</h6>
-			<p className={styles.text_block}>Some text</p>
+			<p className={styles.text_block}>{props.messages}</p>
+		</div>
+	) : (
+		<div className={styles.my_message_block}>
+			<h6>{props.myNick}</h6>
+			<p className={styles.text_block}>{props.messages}</p>
 		</div>
 	);
 };
