@@ -25,7 +25,7 @@ export const Home = () => {
 		setValues({ ...values, [`${name}`]: e.target.value });
 	};
 
-	const handleClick = (e: any) => {
+	const handleClick = () => {
 		console.log('Join');
 	};
 
