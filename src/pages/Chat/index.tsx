@@ -120,7 +120,7 @@ export const Chat = () => {
 			</main>
 			<div className={styles.input_block}>
 				<div className={styles.emoji_icon} onClick={handleClick} ref={iconRef}>
-					<img src='../../../public/img/icons/emoji.png' alt='emoji' />
+					<img src='/img/icons/emoji.png' alt='emoji' />
 				</div>
 				<div className={styles.emoji_block} ref={pickerRef}>
 					{isDisable ? (
