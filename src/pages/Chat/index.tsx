@@ -22,7 +22,7 @@ interface MessageState {
 	message: string;
 }
 
-const socket = io('https://chat-server-xkb3.onrender.com');
+const socket = io('http://localhost:3000');
 
 export const Chat = () => {
 	const { search } = useLocation();
