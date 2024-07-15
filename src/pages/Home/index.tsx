@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -18,6 +18,13 @@ export const Home = () => {
 		[ROOM]: '',
 	});
 
+	useEffect(() => {
+		document.body.style.overflow = 'auto';
+		return () => {
+			document.body.style.overflow = 'hidden';
+		};
+	}, []);
+
 	const handleChange = (
 		name: string,
 		e: React.ChangeEvent<HTMLInputElement>
@@ -30,7 +37,7 @@ export const Home = () => {
 	};
 
 	return (
-		<>
+		<div className={styles.home__wrapper}>
 			<div className={styles.title_block}>
 				<h2 className={styles.title}>ANONYM</h2>
 				<h2 className={styles.title_sub}>OUS</h2>
@@ -60,6 +67,6 @@ export const Home = () => {
 					<Button title='Connect' OnClick={handleClick}></Button>
 				</Link>
 			</form>
-		</>
+		</div>
 	);
 };
