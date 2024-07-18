@@ -96,10 +96,23 @@ export const Chat = () => {
 		navigate('/');
 	};
 
+	useEffect(() => {
+		const mainElement = document.querySelector('main');
+		if (mainElement) {
+			mainElement.scrollTop = mainElement.scrollHeight;
+		}
+	}, [state]);
+
 	return (
 		<>
 			<header>
-				<h3>{params.room}</h3>
+				<h3>
+					{params.room === '' ||
+					params.room === undefined ||
+					params.room === null
+						? 'Anonym'
+						: params.room}
+				</h3>
 				<div className={styles.online}>
 					<span>online: </span>
 					<span>{users}</span>

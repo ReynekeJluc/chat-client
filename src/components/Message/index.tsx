@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import styles from './Message.module.scss';
 
 interface Props {
@@ -8,7 +10,9 @@ interface Props {
 
 export const Message = (props: Props) => {
 	return props.myNick !== props.nickname ? (
-		<div className={styles.message_block}>
+		<div
+			className={classNames(styles.message_block, styles.other_message_block)}
+		>
 			<h6
 				style={{
 					color: 'var(--text-user)',
@@ -19,7 +23,7 @@ export const Message = (props: Props) => {
 			<p className={styles.text_block}>{props.messages}</p>
 		</div>
 	) : (
-		<div className={styles.my_message_block}>
+		<div className={classNames(styles.message_block, styles.my_message_block)}>
 			<h6>{props.myNick}</h6>
 			<p className={styles.text_block}>{props.messages}</p>
 		</div>
