@@ -40,6 +40,12 @@ main {
 	margin-top: 2vh;
 	padding: 2vh 30px;
 	overflow: auto;
+	@media (max-height: 800px) {
+		height: 65vh;
+	}
+	@media (max-height: 650px) {
+		height: 60vh;
+	}
 }
 
 .input_block {
@@ -59,6 +65,11 @@ main {
 			color: #fff;
 			padding: 0 5vw 0 2vw;
 			@media (max-width: 750px) {
+				padding: 1.8vh 20px;
+				font-size: 20px;
+				height: calc(var(--size-input-height) - 25px);
+			}
+			@media (max-height: 500px) {
 				padding: 1.8vh 20px;
 				font-size: 20px;
 				height: calc(var(--size-input-height) - 25px);
@@ -85,8 +96,15 @@ main {
 			@media (max-width: 750px) {
 				max-width: 45%;
 			}
+			@media (max-height: 500px) {
+				max-width: 45%;
+			}
 		}
 		@media (max-width: 750px) {
+			width: calc(var(--size-input-height) - 25px);
+			height: calc(var(--size-input-height) - 25px);
+		}
+		@media (max-height: 500px) {
 			width: calc(var(--size-input-height) - 25px);
 			height: calc(var(--size-input-height) - 25px);
 		}
@@ -106,6 +124,9 @@ main {
 		background: var(--sub-gray);
 		margin: 0;
 		@media (max-width: 750px) {
+			height: calc(var(--size-input-height) - 25px);
+		}
+		@media (max-height: 500px) {
 			height: calc(var(--size-input-height) - 25px);
 		}
 	}

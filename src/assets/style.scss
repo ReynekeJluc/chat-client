@@ -13,7 +13,7 @@ body {
 
 .wrapper {
 	width: calc(100vw - 10%);
-	height: 90vh;
+	max-height: 90vh;
 	margin: 5vh auto;
 
 	::-webkit-scrollbar {
